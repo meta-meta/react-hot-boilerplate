@@ -39,10 +39,10 @@ export default class App extends Component {
         super();
 
         const clamp = (n, min, max) => Math.min(max, Math.max(n, min));
-        const getRandomPos = (n) => clamp(_.random(n - 50, n + 50), 100, 500);
+        const getRandomPos = (n) => clamp(_.random(n - 50, n + 50), 100, 300);
 
         this.state = {
-            thoughts: _.map(_.range(20), (x, i) => {
+            thoughts: _.map(_.range(10), (x, i) => {
                 return {
                     id: i,
                     type: _.random(2),
@@ -72,13 +72,14 @@ export default class App extends Component {
                 const transform = `rotate(${rot} ${x} ${y})`;
 
                 return {
-                    0: <Triangle x={x} y={y} radius={th.size} transform={transform} fill="#f00" fillOpacity={0.5}/>,
-                    1: <circle cx={x} cy={y} r={th.size / 2} transform={transform} fill="#0f0" fillOpacity={0.5}/>,
+                    0: <Triangle x={x} y={y} radius={th.size} transform={transform} fill="#f00" fillOpacity={1} style={{mixBlendMode: 'screen'}}/>,
+                    1: <circle cx={x} cy={y} r={th.size / 2} transform={transform} fill="#0f0" fillOpacity={1} style={{mixBlendMode: 'screen'}}/>,
                     2: <rect x={x - th.size / 2} y={y - th.size / 2}
                              width={th.size} height={th.size}
                              transform={transform}
                              fill="#00f"
-                             fillOpacity={0.5}
+                             fillOpacity={1}
+                             style={{mixBlendMode: 'screen'}}
                     />
                 }[th.type];
             };
@@ -95,7 +96,7 @@ export default class App extends Component {
                 .take(2)
                 .map(th2 => (
                     <Motion key={th.id + '-' + th2.id} style={{x1: spring(th.x, springConf), y1: spring(th.y, springConf), x2: spring(th2.x, springConf), y2: spring(th2.y, springConf)}}>
-                        {(val) => <line x1={val.x1} y1={val.y1} x2={val.x2} y2={val.y2} stroke="grey" strokeOpacity={0.1} strokeWidth={4}/>}
+                        {(val) => <line x1={val.x1} y1={val.y1} x2={val.x2} y2={val.y2} stroke="grey" strokeOpacity={0.5} style={{mixBlendMode: 'screen'}} strokeWidth={4}/>}
                     </Motion>
                 ))
                 .value();
@@ -110,7 +111,7 @@ export default class App extends Component {
         });
 
         return (
-            <SVG width={600} height={600} onClick={this.generateNewPositions}>
+            <SVG width={600} height={600} style={{background: '#666'}} onClick={this.generateNewPositions}>
                 {shapes}
             </SVG>
         );
