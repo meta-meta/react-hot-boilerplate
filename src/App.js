@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import {Motion, spring} from 'react-motion';
 
+import RelativeStaff from './RelativeStaff'
 import ThoughtAnimation from './ThoughtAnimation'
 
 export default class App extends Component {
@@ -10,11 +11,11 @@ export default class App extends Component {
     return (
       <div>
         {
-          <ThoughtAnimation/>
+          /*<ThoughtAnimation/>*/
         }
 
         {
-
+          <RelativeStaff/>
         }
       </div>
 
