@@ -25,22 +25,24 @@ export default class RelativeStaff extends Component {
       sequence: [60, 62, 64, 65, 67, 69, 71, 72],
       meter: 4,
     };
+
+    window.addEventListener('resize', this.forceUpdate.bind(this));
   }
 
   render() {
 
-    const w = 1920;
-    const h = 1080;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-    const midH = h / 2;
+    const midH = height / 2;
 
-    const hGap = w / 30;
-    const vGap = h / 26;
+    const hGap = width / 30;
+    const vGap = height / 26;
 
-    const centerW = h / 50;
-    const landmarkW = h / 80;
-    const subLandmarkW = h / 150;
-    const baseW = h / 300;
+    const centerW = height / 50;
+    const landmarkW = height / 80;
+    const subLandmarkW = height / 150;
+    const baseW = height / 300;
 
     const nToY = n => midH - n * vGap;
     const tToX = t => t * hGap;
@@ -68,9 +70,9 @@ export default class RelativeStaff extends Component {
       .concat(_.times(intervalRatios[n][1], () => '6 3').join(' '));
 
     const {meter} = this.state;
-    const grid = _.map(_.range(w / hGap), t => (
+    const grid = _.map(_.range(width / hGap), t => (
       <line x1={tToX(t)} y1={0}
-            x2={tToX(t)} y2={h}
+            x2={tToX(t)} y2={height}
             stroke={hsvToHex(0, 0, 0.8)}
             strokeOpacity={0.5}
             strokeDasharray=""
@@ -80,7 +82,7 @@ export default class RelativeStaff extends Component {
 
     const staff = _.map(_.range(-12, 13), n => (
       <line x1={0} y1={nToY(n)}
-            x2={w} y2={nToY(n)}
+            x2={width} y2={nToY(n)}
             stroke={hsvToHex(abs(n) / 12, 1, 1)}
             strokeOpacity={0.9}
             strokeDasharray={strokeDasharray(abs(n))}
@@ -104,7 +106,7 @@ export default class RelativeStaff extends Component {
     ));
 
     return (
-      <svg width={w} height={h} style={{background: '#000'}}>
+      <svg width={width} height={height} style={{background: '#000'}}>
         {grid}
         {staff}
         {notes}
